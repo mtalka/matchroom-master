@@ -17,7 +17,7 @@ import axios from "axios"
 Vue.use(Vuex)
 
 function getTeams(searchParameter) {
-  const baseUrl = `http://localhost:5000/api/getMatch/${searchParameter}`
+  const baseUrl = `/api/getMatch/${searchParameter}`
 
   const faction1players = []
   const faction2players = []
@@ -32,7 +32,7 @@ function getTeams(searchParameter) {
       faction2name = result.data.teams.faction2.name;
 
       for (const p of result.data.teams.faction1.roster) {
-        const baseUrl = `http://localhost:5000/api/getPlayerStats/${p.player_id}`
+        const baseUrl = `/api/getPlayerStats/${p.player_id}`
         axios
           .get(baseUrl)
           .then((result) => {
@@ -42,7 +42,7 @@ function getTeams(searchParameter) {
       }
 
       for (const p of result.data.teams.faction2.roster) {
-        const baseUrl = `http://localhost:5000/api/getPlayerStats/${p.player_id}`
+        const baseUrl = `/api/getPlayerStats/${p.player_id}`
         axios
           .get(baseUrl)
           .then((result) => {
@@ -78,9 +78,15 @@ export default new Vuex.Store({
   },
   actions: {
     fetchRosters({ commit }, searchParameter) {
-      getTeams(searchParameter).then((result) => {
-        commit("UPDATE_TEAMS", result);
-      });
+      return new Promise((resolve, reject) => {
+        getTeams(searchParameter).then((result) => {
+          commit("UPDATE_TEAMS", result);
+          resolve()
+        })
+          .catch(() => {
+            reject();
+          });
+      })
     }
   },
   modules: {

@@ -16,6 +16,7 @@
         <v-text-field
           outlined
           placeholder="Match link or match ID"
+          :color="textFieldColor"
           append-icon="mdi-magnify"
           v-model="matchToSearch"
           @click:append="searchMatch(matchToSearch)"
@@ -50,6 +51,12 @@
         />
       </v-col>
     </v-row>
+    <v-snackbar v-model="snackbar" :timeout="4000" :top="true">
+      Match not found
+      <template v-slot:action="{ attrs }">
+        <v-btn color="red" text v-bind="attrs" @click="snackbar = false">Close</v-btn>
+      </template>
+    </v-snackbar>
   </v-container>
 </template>
 
@@ -66,11 +73,15 @@ export default {
       const splitMatchSearchParameter = matchSearchParameter.split("/");
       const parameter =
         splitMatchSearchParameter[splitMatchSearchParameter.length - 1];
-      await this.$store.dispatch("fetchRosters", parameter);
+      this.$store.dispatch("fetchRosters", parameter)
+      .catch(() => {
+        this.snackbar = true;
+      });
     }
   },
   data: () => ({
     matchToSearch: "",
+    snackbar: false,
     maps: [
       "de_mirage",
       "de_dust2",
@@ -88,6 +99,9 @@ export default {
     },
     faction2names() {
       return this.$store.state.faction2players.flatMap(p => p.name);
+    },
+    textFieldColor() {
+      return this.snackbar ? "red" : this.$vuetify.theme.dark.primary;
     }
   }
 };
