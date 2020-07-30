@@ -10,8 +10,8 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, "client/dist")));
+// Serve the static files
+app.use(express.static("dist"));
 
 // An api endpoint that returns the match object
 app.get("/api/getMatch/:matchId", (req, res) => {

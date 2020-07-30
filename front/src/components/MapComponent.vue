@@ -45,7 +45,7 @@
 <script>
 export default {
   name: "MapComponent",
-  props: ["faction1", "mapName", "loading"],
+  props: ["faction1", "mapName"],
   computed: {
     imagePath() {
       return require(`@/assets/maps/${this.mapName}.jpg`);

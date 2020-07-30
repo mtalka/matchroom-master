@@ -25,12 +25,11 @@
     </v-row>
     <v-row justify="center" v-if="$store.state.faction1players.length > 0">
       <v-col sm="3" class="min-width-test">
-        <h3 class="team-title">Team 1</h3>
+        <h3 class="team-title">{{$store.state.faction1name.toUpperCase()}}</h3>
         <div class="names">
           <span v-for="name of faction1names" v-bind:key="name">{{ name }}</span>
         </div>
         <MapComponent
-          :loading="loading"
           v-for="map of maps"
           v-bind:key="map"
           v-bind:mapName="map"
@@ -39,12 +38,11 @@
       </v-col>
       <v-divider vertical v-if="!$vuetify.breakpoint.mobile"></v-divider>
       <v-col sm="3" class="min-width-test">
-        <h3 class="team-title">Team 2</h3>
+        <h3 class="team-title">{{$store.state.faction2name.toUpperCase()}}</h3>
         <div class="names">
           <span v-for="name of faction2names" v-bind:key="name">{{ name }}</span>
         </div>
         <MapComponent
-          :loading="loading"
           v-for="map of maps"
           v-bind:key="map"
           v-bind:mapName="map"
@@ -101,6 +99,7 @@ export default {
 }
 .team-title {
   text-align: center;
+  margin-bottom: .5rem;
 }
 .names {
   display: flex;

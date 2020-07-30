@@ -21,10 +21,15 @@ function getTeams(searchParameter) {
 
   const faction1players = []
   const faction2players = []
+  let faction1name = "";
+  let faction2name = "";
 
   return axios
     .get(baseUrl)
     .then((result) => {
+
+      faction1name = result.data.teams.faction1.name;
+      faction2name = result.data.teams.faction2.name;
 
       for (const p of result.data.teams.faction1.roster) {
         const baseUrl = `http://localhost:5000/api/getPlayerStats/${p.player_id}`
@@ -47,8 +52,7 @@ function getTeams(searchParameter) {
       }
     })
     .then(() => {
-      console.log(faction1players);
-      return {faction1players, faction2players}
+      return {faction1players, faction2players, faction1name, faction2name}
     })
     .catch(error => {
       Promise.reject(error)
@@ -60,13 +64,16 @@ function getTeams(searchParameter) {
 export default new Vuex.Store({
   state: {
     faction1players: [],
-    faction2players: []
+    faction2players: [],
+    faction1name: "",
+    faction2name: ""
   },
   mutations: {
     UPDATE_TEAMS(state, data) {
-      console.log(data);
       state.faction1players = data.faction1players;
       state.faction2players = data.faction2players;
+      state.faction1name = data.faction1name;
+      state.faction2name = data.faction2name;
     }
   },
   actions: {
