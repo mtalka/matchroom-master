@@ -72,7 +72,6 @@ export default new Vuex.Store({
   actions: {
     fetchRosters({ commit }, searchParameter) {
       getTeams(searchParameter).then((result) => {
-        console.log(result);
         commit("UPDATE_TEAMS", result);
       });
     }

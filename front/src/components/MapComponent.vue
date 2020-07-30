@@ -6,7 +6,7 @@
           <v-card-text>
             <div class="map-wrap">
               <span class="map-title">{{this.mapName}}</span>
-              <div>
+              <div class="average-wrapper">
                 <span>Avg. Win% </span>
                 <span class="map-win-rate" v-bind:style="{ color: winRateColor }">{{mapTheMapWinRates}}</span>
               </div>
@@ -19,11 +19,12 @@
         </div>
 
         <v-avatar class="ma-3" size="75" tile>
-          <v-img :src="imagePath"></v-img>
+          <v-img :src="imagePath"
+            class="shrink mt-1"></v-img>
         </v-avatar>
       </div>
     </v-card>
-    <v-expansion-panels>
+    <v-expansion-panels tile>
     <v-expansion-panel>
         <v-expansion-panel-header>Individual statistics</v-expansion-panel-header>
         <v-expansion-panel-content>
@@ -44,7 +45,7 @@
 <script>
 export default {
   name: "MapComponent",
-  props: ["faction1", "mapName"],
+  props: ["faction1", "mapName", "loading"],
   computed: {
     imagePath() {
       return require(`@/assets/maps/${this.mapName}.jpg`);
@@ -145,5 +146,6 @@ export default {
 .average-wrapper {
     display: flex;
     justify-content: space-between;
+    width: 125px;
 }
 </style>
