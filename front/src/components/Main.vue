@@ -15,7 +15,7 @@
       </div>
         <v-text-field
           outlined
-          placeholder="Match link or match ID"
+          placeholder="FaceIt match link or match ID"
           :color="textFieldColor"
           append-icon="mdi-magnify"
           v-model="matchToSearch"
@@ -23,6 +23,10 @@
           @keydown.enter="searchMatch(matchToSearch)"
         ></v-text-field>
       </v-col>
+    </v-row>
+    
+    <v-row class="text-center" v-if="$store.state.faction1players.length === 0">
+      <v-col class="input-guide">In FaceIt matchroom, click <span class="emphasis"><v-icon>mdi-share mdi-18px</v-icon> SHARE</span>, choose <span class="emphasis"><v-icon>mdi-link-variant mdi-18px</v-icon> Copy link</span>, and paste above.</v-col>
     </v-row>
     <v-row justify="center" v-if="$store.state.faction1players.length > 0">
       <v-col sm="3" class="min-width-test">
@@ -123,5 +127,12 @@ export default {
     display: flex;
     justify-content: center;
     margin-bottom: 1rem;
+}
+.emphasis {
+  padding: 1px 6px;
+  border-radius: 5px;
+  border: 1px solid lightgray;
+  color: lightgray;
+  background: #272727;
 }
 </style>
